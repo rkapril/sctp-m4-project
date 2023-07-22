@@ -36,10 +36,10 @@ jobs:
       - checkout
       - docker/check
       - docker/build:
-          image: privateoc/education-space
+          image: rkapril/education-space
           tag: 0.2.0
       - docker/push:
-          image: privateoc/education-space
+          image: rkapril/education-space
           tag: 0.2.0
   deploy:
     docker:
