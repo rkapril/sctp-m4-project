@@ -6,28 +6,22 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/node:16.10
+      - image: cimg/openjdk:17.0.7
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
-      - run: |
-          echo "Installing dependencies..."
-          npm install
+      - run: mvn clean package
   test:
     docker:
-      - image: cimg/node:16.10
+      - image: cimg/openjdk:17.0.7
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
       - run: |
           echo "Running tests..."
-          npm run test
+          mvn test
   build-and-push:
     executor: docker/docker
     docker:
-      - image: cimg/node:16.10
+      - image: cimg/openjdk:17.0.7
         auth:
             username: $DOCKER_LOGIN
             password: $DOCKER_PASSWORD
@@ -37,10 +31,10 @@ jobs:
       - docker/check
       - docker/build:
           image: privateoc/education-space
-          tag: 0.2.0
+          tag: $(CIRCLE_SHA1)
       - docker/push:
           image: privateoc/education-space
-          tag: 0.2.0
+          tag: $(CIRCLE_SHA1)
   deploy:
     docker:
         - image: cimg/node:16.10
