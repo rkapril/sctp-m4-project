@@ -1,1 +1,70 @@
-test
+version: 2.1
+orbs:
+  node: circleci/node@5.0.1
+  docker: circleci/docker@2.1.4
+  heroku: circleci/heroku@2.0.0
+jobs:
+  build:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run: |
+          echo "Installing dependencies..."
+          npm install
+  test:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run: |
+          echo "Running tests..."
+          npm run test
+  build-and-push:
+    executor: docker/docker
+    docker:
+      - image: cimg/node:16.10
+        auth:
+            username: $DOCKER_LOGIN
+            password: $DOCKER_PASSWORD
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: privateoc/education-space
+          tag: 0.2.0
+      - docker/push:
+          image: privateoc/education-space
+          tag: 0.2.0
+  deploy:
+    docker:
+        - image: cimg/node:16.10
+    steps:
+        - setup_remote_docker      
+        - heroku/install
+        - checkout
+        - run:
+            name: Heroku Container Push
+            command: | 
+                heroku container:login
+                heroku container:push web -a neowc-su-devops
+                heroku container:release web -a neowc-su-devops
+
+workflows:
+  simple_workflow:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - build-and-push:
+          requires:
+            - test
+      - deploy:
+          requires:
+            - build-and-push
