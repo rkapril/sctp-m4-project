@@ -19,17 +19,17 @@ jobs:
           mvn test
   scan:
     docker:
-        - image: cimg/openjdk:17.0.7
+      - image: cimg/openjdk:17.0.7
     environment:
-        IMAGE_NAME: rkapril/education-space
+      IMAGE_NAME: rkapril/education-space
     steps:
-        - checkout
-        - setup_remote_docker      
-        - docker/check
-        - run: docker build -t $IMAGE_NAME .
-        - snyk/scan:
-            severity-threshold: critical
-            docker-image-name: $IMAGE_NAME
+      - checkout
+      - setup_remote_docker
+      - docker/check
+      - run: docker build -t $IMAGE_NAME .
+      - snyk/scan:
+          severity-threshold: critical
+          docker-image-name: $IMAGE_NAME
   build-and-push:
     executor: docker/docker
     steps:
@@ -42,7 +42,7 @@ jobs:
       - docker/push:
           image: rkapril/education-space
           tag: ${CIRCLE_SHA1}
-      
+
 workflows:
   simple_workflow:
     jobs:
@@ -57,4 +57,3 @@ workflows:
           requires:
             - test
             - scan
-      
