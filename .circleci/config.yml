@@ -31,10 +31,10 @@ jobs:
       - docker/check
       - docker/build:
           image: privateoc/education-space
-          tag: $(CIRCLE_SHA1)
+          tag: ${CIRCLE_SHA1}
       - docker/push:
           image: privateoc/education-space
-          tag: $(CIRCLE_SHA1)
+          tag: ${CIRCLE_SHA1}
   deploy:
     docker:
         - image: cimg/node:16.10
