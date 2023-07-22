@@ -5,4 +5,4 @@ WORKDIR /app
 #COPY target/simple-crm-0.0.1-SNAPSHOT.jar crm-app.jar
 COPY target/hr-management-0.0.1-SNAPSHOT.jar hr-management.jar
 
-CMD ["java", "-jar", "crm-app.jar"]
+CMD ["java", "-jar", "hr-management.jar"]
