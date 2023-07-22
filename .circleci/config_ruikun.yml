@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   docker: circleci/docker@2.1.4
-  heroku: circleci/heroku@2.0.0
   snyk: snyk/snyk@1.5.0
 jobs:
   build:
@@ -22,10 +21,10 @@ jobs:
     docker:
         - image: cimg/openjdk:17.0.7
     environment:
-        IMAGE_NAME: privateoc/education-space
+        IMAGE_NAME: rkapril/education-space
     steps:
-        - setup_remote_docker
         - checkout
+        - setup_remote_docker      
         - docker/check
         - run: docker build -t $IMAGE_NAME .
         - snyk/scan:
@@ -33,35 +32,17 @@ jobs:
             docker-image-name: $IMAGE_NAME
   build-and-push:
     executor: docker/docker
-    docker:
-      - image: cimg/openjdk:17.0.7
-        auth:
-            username: $DOCKER_LOGIN
-            password: $DOCKER_PASSWORD
     steps:
       - setup_remote_docker
       - checkout
       - docker/check
       - docker/build:
-          image: privateoc/education-space
+          image: rkapril/education-space
           tag: ${CIRCLE_SHA1}
       - docker/push:
-          image: privateoc/education-space
+          image: rkapril/education-space
           tag: ${CIRCLE_SHA1}
-  deploy:
-    docker:
-        - image: cimg/node:16.10
-    steps:
-        - setup_remote_docker      
-        - heroku/install
-        - checkout
-        - run:
-            name: Heroku Container Push
-            command: | 
-                heroku container:login
-                heroku container:push web -a neowc-su-devops
-                heroku container:release web -a neowc-su-devops
-
+      
 workflows:
   simple_workflow:
     jobs:
@@ -76,6 +57,4 @@ workflows:
           requires:
             - test
             - scan
-      - deploy:
-          requires:
-            - build-and-push
+      
