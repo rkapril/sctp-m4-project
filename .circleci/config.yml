@@ -8,6 +8,14 @@ jobs:
     steps:
       - checkout
       - run: mvn clean package
+  test:
+    docker:
+      - image: cimg/openjdk:17.0.7
+    steps:
+      - checkout
+      - run: |
+          echo "Running tests..."
+          mvn test
   build-and-push:
     executor: docker/docker
     steps:
@@ -25,7 +33,10 @@ workflows:
   simple_workflow:
     jobs:
       - build
-      - build-and-push:
+      - test:
           requires:
             - build
+      - build-and-push:
+          requires:
+            - test
       
