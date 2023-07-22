@@ -1,13 +1,7 @@
-FROM node:16-alpine
+FROM eclipse-temurin:17.0.7_7-jdk
 
 WORKDIR /app
 
-ENV PORT=3000
+COPY target/simple-crm-0.0.1-SNAPSHOT.jar crm-app.jar
 
-COPY ["package.json", "package-lock.json*", "./"]
-
-RUN npm install
-
-COPY . .
-
-CMD ["npm", "start"]
+CMD ["java", "-jar", "crm-app.jar"]
