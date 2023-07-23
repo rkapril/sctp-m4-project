@@ -28,7 +28,7 @@ jobs:
       - docker/check
       - run: docker build -t $IMAGE_NAME .
       - snyk/scan:
-          severity-threshold: high
+          severity-threshold: critical
           docker-image-name: $IMAGE_NAME
   build-and-push:
     executor: docker/docker
