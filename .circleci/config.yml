@@ -22,7 +22,7 @@ jobs:
     docker:
         - image: cimg/openjdk:17.0.7
     environment:
-        IMAGE_NAME: leonardlai1222/education-space
+        IMAGE_NAME: privateoc/education-space    #leonardlai1222/education-space  << uncomment to test
     steps:
         - setup_remote_docker
         - checkout
@@ -43,10 +43,10 @@ jobs:
       - checkout
       - docker/check
       - docker/build:
-          image: leonardlai1222/education-space
+          image: privateoc/education-space    #leonardlai1222/education-space  << uncomment to test
           tag: ${CIRCLE_SHA1}
       - docker/push:
-          image: leonardlai1222/education-space
+          image: privateoc/education-space    #leonardlai1222/education-space  << uncomment to test
           tag: ${CIRCLE_SHA1}
   deploy:
     docker:
