@@ -63,19 +63,52 @@ jobs:
                 heroku container:release web -a neowc-su-devops
 
 workflows:
-  simple_workflow:
+  ci_flow:
     jobs:
       - build
+          filters:
+              branches:
+                only: develop
       - test:
           requires:
             - build
+          filters:
+              branches:
+                only: develop
       - scan:
           requires:
             - build
+          filters:
+              branches:
+                only: develop
+  cicd_flow:
+    jobs:
+      - build
+          filters:
+              branches:
+                only: release
+      - test:
+          requires:
+            - build
+          filters:
+              branches:
+                only: release
+      - scan:
+          requires:
+            - build
+          filters:
+              branches:
+                only: release
       - build-and-push:
           requires:
             - test
             - scan
+          filters:
+              branches:
+                only: release
       - deploy:
           requires:
             - build-and-push
+          filters:
+              branches:
+                only: release
