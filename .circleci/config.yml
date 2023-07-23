@@ -63,6 +63,7 @@ jobs:
                 heroku container:release web -a neowc-su-devops
 
 workflows:
+  # CI flow for develop branch
   ci_flow:
     jobs:
       - build:
@@ -81,6 +82,7 @@ workflows:
           filters:
               branches:
                 only: develop
+  # CICD flow for develop branch
   cicd_flow:
     jobs:
       - build:
