@@ -22,7 +22,7 @@ jobs:
     docker:
         - image: cimg/openjdk:17.0.7
     environment:
-        IMAGE_NAME: privateoc/education-space    #leonardlai1222/education-space  << uncomment to test
+        IMAGE_NAME: privateoc/education-space
     steps:
         - setup_remote_docker
         - checkout
@@ -43,10 +43,10 @@ jobs:
       - checkout
       - docker/check
       - docker/build:
-          image: privateoc/education-space    #leonardlai1222/education-space  << uncomment to test
+          image: privateoc/education-space
           tag: ${CIRCLE_SHA1}
       - docker/push:
-          image: privateoc/education-space    #leonardlai1222/education-space  << uncomment to test
+          image: privateoc/education-space
           tag: ${CIRCLE_SHA1}
   deploy:
     docker:
@@ -63,55 +63,19 @@ jobs:
                 heroku container:release web -a neowc-su-devops
 
 workflows:
-  # CI_flow for develop branch
-  ci_flow:
+  simple_workflow:
     jobs:
-      - build:
-          filters:
-              branches:
-                only: develop
+      - build
       - test:
           requires:
             - build
-          filters:
-              branches:
-                only: develop
       - scan:
           requires:
             - build
-          filters:
-              branches:
-                only: develop
-
-  # CICD_flow for release branch
-  cicd_flow:
-    jobs:
-      - build:
-          filters:
-              branches:
-                only: release
-      - test:
-          requires:
-            - build
-          filters:
-              branches:
-                only: release
-      - scan:
-          requires:
-            - build
-          filters:
-              branches:
-                only: release
       - build-and-push:
           requires:
             - test
             - scan
-          filters:
-              branches:
-                only: release
       - deploy:
           requires:
             - build-and-push
-          filters:
-              branches:
-                only: release
