@@ -86,13 +86,13 @@ workflows:
   # CICD_flow for release branch
   cicd_flow:
     jobs:
-      - build:
+      - build
           filters:
             branches:
               only: /^release.\d+\.\d+\.\d+$/
       - test:
           requires:
-            - build:
+            - build
           filters:
               branches:
                 only: /^release.\d+\.\d+\.\d+$/
