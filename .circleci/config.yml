@@ -102,12 +102,6 @@ workflows:
           filters:
             branches:
               only: /^release.\d+\.\d+\.\d+$/
-      - scan:
-          requires:
-            - build
-          filters:
-            branches:
-              only: /^release.\d+\.\d+\.\d+$/
       - build-and-push:
           requires:
             - test
