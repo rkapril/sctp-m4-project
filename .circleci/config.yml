@@ -2,6 +2,7 @@ version: 2.1
 orbs:
   docker: circleci/docker@2.1.4
   heroku: circleci/heroku@2.0.0
+  snyk: snyk/snyk@1.7.0
 jobs:
   build:
     docker:
@@ -17,6 +18,19 @@ jobs:
       - run: |
           echo "Running tests..."
           npm run test
+  scan:
+    docker:
+        - image: cimg/openjdk:17.0.7
+    environment:
+        IMAGE_NAME: rkapril/education-space
+    steps:
+        - setup_remote_docker
+        - checkout
+        - docker/check
+        - run: docker build -t $IMAGE_NAME .
+        - snyk/scan:
+            severity-threshold: critical
+            docker-image-name: $IMAGE_NAME
   build-and-push:
     executor: docker/docker
     docker:
@@ -29,10 +43,10 @@ jobs:
       - checkout
       - docker/check
       - docker/build:
-          image: privateoc/education-space
+          image: rkapril/education-space
           tag: 0.2.0
       - docker/push:
-          image: privateoc/education-space
+          image: rkapril/education-space
           tag: 0.2.0
   deploy:
     docker:
