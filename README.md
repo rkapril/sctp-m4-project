@@ -24,3 +24,5 @@ git push
 git branch -d release/0.1.0
 git branch -d develop
 ```
+
+Added from develop branch...
