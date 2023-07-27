@@ -93,25 +93,13 @@ workflows:
       - test:
           requires:
             - build
-          filters:
-            branches:
-              only: /^release.\d+\.\d+\.\d+$/
       - scan:
           requires:
             - build
-          filters:
-            branches:
-              only: /^release.\d+\.\d+\.\d+$/
       - build-and-push:
           requires:
             - test
             - scan
-          filters:
-            branches:
-              only: /^release.\d+\.\d+\.\d+$/
       - deploy:
           requires:
             - build-and-push
-          filters:
-            branches:
-              only: /^release.\d+\.\d+\.\d+$/
