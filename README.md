@@ -20,9 +20,7 @@ git checkout develop
 git merge release/0.1.0
 git checkout main
 git merge develop
+git push
 git branch -d release/0.1.0
 git branch -d develop
 ```
-
-Added from develop branch...
-Added from release branch...
