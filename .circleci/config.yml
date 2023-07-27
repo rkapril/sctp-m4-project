@@ -33,11 +33,6 @@ jobs:
           docker-image-name: $IMAGE_NAME
   build-and-push:
     executor: docker/docker
-    docker:
-      - image: cimg/openjdk:17.0.7
-        auth:
-          username: $DOCKER_LOGIN
-          password: $DOCKER_PASSWORD
     steps:
       - setup_remote_docker
       - checkout
