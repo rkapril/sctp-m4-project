@@ -28,7 +28,7 @@ git push origin release/0.1.0
 
 git checkout develop
 git merge release/0.1.0
-git push
+git push origin develop
 git checkout main
 git merge release/0.1.0
 git push
