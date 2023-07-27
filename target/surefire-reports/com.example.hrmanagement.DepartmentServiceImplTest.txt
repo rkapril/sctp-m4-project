@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.example.hrmanagement.DepartmentServiceImplTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.729 s - in com.example.hrmanagement.DepartmentServiceImplTest
+=======
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.056 s - in com.example.hrmanagement.DepartmentServiceImplTest
+>>>>>>> afa427676c7dbdded512f1c842653e68c12e3a6c

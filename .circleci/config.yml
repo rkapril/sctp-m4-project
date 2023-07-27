@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   docker: circleci/docker@2.1.4
-  snyk: snyk/snyk@1.5.0
+  heroku: circleci/heroku@2.0.0
 jobs:
   build:
     docker:
@@ -16,44 +16,84 @@ jobs:
       - checkout
       - run: |
           echo "Running tests..."
-          mvn test
-  scan:
-    docker:
-      - image: cimg/openjdk:17.0.7
-    environment:
-      IMAGE_NAME: rkapril/education-space
-    steps:
-      - checkout
-      - setup_remote_docker
-      - docker/check
-      - run: docker build -t $IMAGE_NAME .
-      - snyk/scan:
-          severity-threshold: critical
-          docker-image-name: $IMAGE_NAME
+          npm run test
   build-and-push:
     executor: docker/docker
+    docker:
+      - image: cimg/node:16.10
+        auth:
+            username: $DOCKER_LOGIN
+            password: $DOCKER_PASSWORD
     steps:
       - setup_remote_docker
       - checkout
       - docker/check
       - docker/build:
-          image: rkapril/education-space
-          tag: ${CIRCLE_SHA1}
+          image: privateoc/education-space
+          tag: 0.2.0
       - docker/push:
-          image: rkapril/education-space
-          tag: ${CIRCLE_SHA1}
+          image: privateoc/education-space
+          tag: 0.2.0
+  deploy:
+    docker:
+        - image: cimg/node:16.10
+    steps:
+        - setup_remote_docker      
+        - heroku/install
+        - checkout
+        - run:
+            name: Heroku Container Push
+            command: | 
+                heroku container:login
+                heroku container:push web -a neowc-su-devops
+                heroku container:release web -a neowc-su-devops
 
 workflows:
-  simple_workflow:
+  # CI_flow for develop branch
+  ci_flow:
     jobs:
-      - build
+      - build:
+          filters:
+              branches:
+                only: develop
+      - test:
+          requires:
+            - build
+          filters:
+              branches:
+                only: develop
+      - scan:
+          requires:
+            - build
+          filters:
+              branches:
+                only: develop
+
+  # CICD_flow for release branch
+  cicd_flow:
+    jobs:
+      - build:
+          filters:
+              branches:
+                only: release
       - test:
           requires:
             - build
       - scan:
           requires:
             - build
+          filters:
+              branches:
+                only: release
+      - scan:
+          requires:
+            - build
+          filters:
+              branches:
+                only: release
       - build-and-push:
           requires:
             - test
-            - scan
+      - deploy:
+          requires:
+            - build-and-push

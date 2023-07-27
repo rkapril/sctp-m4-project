@@ -1,0 +1,5 @@
+com\example\hrmanagement\DependentServiceImplTest.class
+com\example\hrmanagement\DepartmentServiceImplTest.class
+com\example\hrmanagement\HrManagementApplicationTests.class
+com\example\hrmanagement\JobServiceImplTest.class
+com\example\hrmanagement\EmployeeServiceImplTest.class

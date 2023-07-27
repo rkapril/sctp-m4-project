@@ -1,0 +1,5 @@
+## Check branches
+
+```
+git branch
+```
