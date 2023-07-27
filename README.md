@@ -14,7 +14,7 @@ git push origin develop
 git checkout -b release/0.1.0
 git add ./
 git commit -m "added some text"
-git push origin develop
+git push origin release/0.1.0
 
 git checkout develop
 git merge release/0.1.0

@@ -89,7 +89,7 @@ workflows:
       - build:
           filters:
               branches:
-                only: release
+                only: /^release.\d+\.\d+\.\d+$/
       - test:
           requires:
             - build
@@ -98,13 +98,13 @@ workflows:
             - build
           filters:
               branches:
-                only: release
+                only: /^release.\d+\.\d+\.\d+$/
       - scan:
           requires:
             - build
           filters:
               branches:
-                only: release
+                only: /^release.\d+\.\d+\.\d+$/
       - build-and-push:
           requires:
             - test
