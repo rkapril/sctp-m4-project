@@ -34,7 +34,7 @@ jobs:
   build-and-push:
     executor: docker/docker
     docker:
-      - image: cimg/node:16.10
+      - image: cimg/openjdk:17.0.7
         auth:
           username: $DOCKER_LOGIN
           password: $DOCKER_PASSWORD
@@ -50,7 +50,7 @@ jobs:
           tag: 0.1.0
   deploy:
     docker:
-      - image: cimg/node:16.10
+      - image: cimg/openjdk:17.0.7
     steps:
       - setup_remote_docker
       - heroku/install
