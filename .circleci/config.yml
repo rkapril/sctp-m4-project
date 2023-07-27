@@ -73,15 +73,9 @@ workflows:
       - test:
           requires:
             - build
-          filters:
-            branches:
-              only: develop
       - scan:
           requires:
             - build
-          filters:
-            branches:
-              only: develop
 
   # CICD_flow for release branch
   cicd_flow:
@@ -89,7 +83,7 @@ workflows:
       - build:
           filters:
             branches:
-              only: /^release.\d+\.\d+\.\d+$/
+              only: /^release\/\d+\.\d+\.\d+$/
       - test:
           requires:
             - build
