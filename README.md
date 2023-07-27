@@ -5,6 +5,12 @@ git branch
 git branch -a
 ```
 
+## Switch branch
+
+```
+git checkout develop
+```
+
 ```
 git checkout main
 git checkout -b develop
