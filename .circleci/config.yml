@@ -93,7 +93,7 @@ workflows:
       - test:
           requires:
             - build:
-                filters:
+          filters:
               branches:
                 only: /^release.\d+\.\d+\.\d+$/
       - scan:
