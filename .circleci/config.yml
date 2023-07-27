@@ -106,6 +106,9 @@ workflows:
           requires:
             - test
             - scan
+          filters:
+            branches:
+              only: /^release.\d+\.\d+\.\d+$/
       - deploy:
           requires:
             - build-and-push
