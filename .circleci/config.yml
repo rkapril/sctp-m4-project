@@ -20,24 +20,24 @@ jobs:
           mvn test
   scan:
     docker:
-        - image: cimg/openjdk:17.0.7
+      - image: cimg/openjdk:17.0.7
     environment:
-        IMAGE_NAME: rkapril/education-space
+      IMAGE_NAME: rkapril/education-space
     steps:
-        - setup_remote_docker
-        - checkout
-        - docker/check
-        - run: docker build -t $IMAGE_NAME .
-        - snyk/scan:
-            severity-threshold: critical
-            docker-image-name: $IMAGE_NAME
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - run: docker build -t $IMAGE_NAME .
+      - snyk/scan:
+          severity-threshold: critical
+          docker-image-name: $IMAGE_NAME
   build-and-push:
     executor: docker/docker
     docker:
       - image: cimg/node:16.10
         auth:
-            username: $DOCKER_LOGIN
-            password: $DOCKER_PASSWORD
+          username: $DOCKER_LOGIN
+          password: $DOCKER_PASSWORD
     steps:
       - setup_remote_docker
       - checkout
@@ -50,17 +50,17 @@ jobs:
           tag: 0.1.0
   deploy:
     docker:
-        - image: cimg/node:16.10
+      - image: cimg/node:16.10
     steps:
-        - setup_remote_docker      
-        - heroku/install
-        - checkout
-        - run:
-            name: Heroku Container Push
-            command: | 
-                heroku container:login
-                heroku container:push web -a neowc-su-devops
-                heroku container:release web -a neowc-su-devops
+      - setup_remote_docker
+      - heroku/install
+      - checkout
+      - run:
+          name: Heroku Container Push
+          command: |
+            heroku container:login
+            heroku container:push web -a neowc-su-devops
+            heroku container:release web -a neowc-su-devops
 
 workflows:
   # CI_flow for develop branch
@@ -68,43 +68,46 @@ workflows:
     jobs:
       - build:
           filters:
-              branches:
-                only: develop
+            branches:
+              only: develop
       - test:
           requires:
             - build
           filters:
-              branches:
-                only: develop
+            branches:
+              only: develop
       - scan:
           requires:
             - build
           filters:
-              branches:
-                only: develop
+            branches:
+              only: develop
 
   # CICD_flow for release branch
   cicd_flow:
     jobs:
       - build:
           filters:
-              branches:
-                only: /^release.\d+\.\d+\.\d+$/
+            branches:
+              only: /^release.\d+\.\d+\.\d+$/
       - test:
           requires:
-            - build
-      - scan:
-          requires:
-            - build
-          filters:
+            - build:
+                filters:
               branches:
                 only: /^release.\d+\.\d+\.\d+$/
       - scan:
           requires:
             - build
           filters:
-              branches:
-                only: /^release.\d+\.\d+\.\d+$/
+            branches:
+              only: /^release.\d+\.\d+\.\d+$/
+      - scan:
+          requires:
+            - build
+          filters:
+            branches:
+              only: /^release.\d+\.\d+\.\d+$/
       - build-and-push:
           requires:
             - test
