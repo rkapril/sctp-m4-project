@@ -30,7 +30,7 @@ git checkout develop
 git merge release/0.1.0
 git push
 git checkout main
-got merge release/0.1.0
+git merge release/0.1.0
 git push
 git branch -d release/0.1.0
 git push origin --delete release/0.1.0
