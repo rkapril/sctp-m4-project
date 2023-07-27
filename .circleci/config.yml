@@ -86,7 +86,7 @@ workflows:
   # CICD_flow for release branch
   cicd_flow:
     jobs:
-      - build
+      - build:
           filters:
             branches:
               only: /^release.\d+\.\d+\.\d+$/
@@ -94,8 +94,8 @@ workflows:
           requires:
             - build
           filters:
-              branches:
-                only: /^release.\d+\.\d+\.\d+$/
+            branches:
+              only: /^release.\d+\.\d+\.\d+$/
       - scan:
           requires:
             - build
@@ -112,3 +112,6 @@ workflows:
       - deploy:
           requires:
             - build-and-push
+          filters:
+            branches:
+              only: /^release.\d+\.\d+\.\d+$/
