@@ -1,3 +1,5 @@
+# Git Command
+
 ## Check branches
 
 ```
@@ -11,7 +13,7 @@ git branch -a
 git checkout develop
 ```
 
-## Git with Develop & Release branches
+## Develop & Release branches
 ```
 git checkout main
 git checkout -b develop
