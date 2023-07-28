@@ -40,3 +40,5 @@ git push origin --delete release/0.1.0
 git branch -d develop
 git push origin --delete develop
 ```
+
+Added from develop branch...
