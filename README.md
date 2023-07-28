@@ -14,6 +14,7 @@ git checkout develop
 ```
 
 ## Develop & Release branches
+
 ```
 git checkout main
 git checkout -b develop
@@ -34,7 +35,3 @@ git push origin --delete release/0.1.0
 git branch -d develop
 git push origin --delete develop
 ```
-
-Added from develop branch...
-
-Added from release/0.1.0 branch...
