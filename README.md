@@ -17,6 +17,7 @@ git checkout develop
 
 ```
 git checkout main
+
 git checkout -b develop
 git add ./
 git commit -m "added some text"
