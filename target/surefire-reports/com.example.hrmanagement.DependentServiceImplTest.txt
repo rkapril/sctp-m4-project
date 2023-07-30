@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.example.hrmanagement.DependentServiceImplTest
 -------------------------------------------------------------------------------
-<<<<<<< HEAD
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.027 s - in com.example.hrmanagement.DependentServiceImplTest
-=======
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.109 s - in com.example.hrmanagement.DependentServiceImplTest
->>>>>>> afa427676c7dbdded512f1c842653e68c12e3a6c
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.052 s - in com.example.hrmanagement.DependentServiceImplTest
