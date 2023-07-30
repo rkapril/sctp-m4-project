@@ -1,5 +1,7 @@
 export $(cat .env | xargs)
 
+mvn spring-boot:run
+
 # Git Command
 
 ## Check branches
