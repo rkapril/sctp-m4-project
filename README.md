@@ -1,3 +1,5 @@
+export $(cat .env | xargs)
+
 # Git Command
 
 ## Check branches
