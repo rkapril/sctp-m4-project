@@ -1,6 +1,9 @@
-export $(cat .env | xargs)
+1. Spring Boot Password Encryption for Application Configuration File using Jasypt
 
+```
+export $(cat .env | xargs)
 mvn spring-boot:run
+```
 
 # Git Command
 
